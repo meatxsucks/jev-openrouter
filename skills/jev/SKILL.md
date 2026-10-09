@@ -49,7 +49,7 @@ Los umbrales por defecto son 0.8 para `yes` o la opción elegida, y 0.2 para `no
 
 - Ventana de contexto de 32.000 tokens entre `state` y las preguntas.
 - Las respuestas incluyen `cost` en USD cuando OpenRouter lo informa.
-- Si la llamada falla por red o por la clave, el script termina con código 1 y el error en stderr.
+- Si algo falla (sin clave, sin créditos, red, error de OpenRouter o JSON de entrada inválido), el script sale con código 0 y devuelve `fallback: true` con `reason`. Nunca bloquea el flujo.
 
 ## Qué no hacer
 
