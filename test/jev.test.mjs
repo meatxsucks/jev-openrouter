@@ -108,3 +108,18 @@ test("decidir expone el status cuando OpenRouter responde error", async () => {
     (e) => e instanceof JevError && e.status === 401,
   );
 });
+
+test("el CLI sin clave devuelve fallback y sale con código 0", async () => {
+  const { execFile } = await import("node:child_process");
+  const { promisify } = await import("node:util");
+  const env = { ...process.env };
+  delete env.OPENROUTER_API_KEY;
+  const entrada = JSON.stringify({ state: "x", questions: { a: { type: "noul", instructions: "?" } } });
+  const script = new URL("../skills/jev/scripts/jev.mjs", import.meta.url).pathname;
+  const proceso = promisify(execFile)(process.execPath, [script], { env });
+  proceso.child.stdin.end(entrada);
+  const { stdout } = await proceso;
+  const r = JSON.parse(stdout);
+  assert.equal(r.fallback, true);
+  assert.match(r.reason, /OPENROUTER_API_KEY/);
+});

@@ -37,7 +37,9 @@ Reglas del formato:
 
 ## Cómo leer la respuesta
 
-La salida trae `answers` por cada pregunta, con:
+**Si la salida trae `"fallback": true`, Jev no respondió** (sin clave, sin créditos, red caída o error de OpenRouter). En ese caso la skill sigue avanzando sin la decisión de Jev: usa el camino normal de la skill, y avísale a Matías en una línea qué pasó (`reason`). `sin_creditos: true` indica que fue por créditos (402 o 429).
+
+Si no hay fallback, la salida trae `answers` por cada pregunta, con:
 - `verdict`: `yes` o `no` para `noul`; la opción elegida o `undecided` para `choice`.
 - `probability`: la probabilidad asociada.
 

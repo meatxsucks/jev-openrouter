@@ -110,15 +110,20 @@ async function leerStdin() {
   return texto;
 }
 
+// Si Jev no responde (sin clave, sin créditos, red caída), la skill tiene que seguir avanzando.
+// Por eso el CLI devuelve fallback: true con el motivo y sale con código 0, en vez de fallar.
 async function main() {
-  const entrada = JSON.parse(await leerStdin());
-  const resultado = await decidir(entrada);
+  let resultado;
+  try {
+    const entrada = JSON.parse(await leerStdin());
+    resultado = await decidir(entrada);
+  } catch (e) {
+    const sinCreditos = e.status === 402 || e.status === 429;
+    resultado = { fallback: true, sin_creditos: sinCreditos, reason: e.message };
+  }
   process.stdout.write(JSON.stringify(resultado, null, 2) + "\n");
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main().catch((e) => {
-    process.stderr.write(`${e.name}: ${e.message}\n`);
-    process.exit(1);
-  });
+  main();
 }
