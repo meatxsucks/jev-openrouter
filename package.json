@@ -1,0 +1,11 @@
+{
+  "name": "jev-openrouter",
+  "version": "0.1.0",
+  "description": "Cliente de Jev (decisiones tipadas) vía OpenRouter, para usar como skill de Claude Code",
+  "type": "module",
+  "license": "MIT",
+  "author": "Matias Cruz",
+  "engines": { "node": ">=18" },
+  "scripts": { "test": "node --test test/jev.test.mjs" },
+  "keywords": ["jev", "openrouter", "claude-code", "skill", "classification"]
+}
