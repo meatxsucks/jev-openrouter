@@ -28,7 +28,7 @@ Este cliente lo llama a través de la API de OpenRouter y lo deja listo para usa
 ```mermaid
 flowchart TD
     A[Claude Code necesita decidir] --> B[Arma JSON: state + questions]
-    B --> C[echo JSON | node jev.mjs]
+    B --> C["echo JSON y node jev.mjs"]
     C --> D{¿Clave y créditos?}
     D -- Sí --> E[POST openrouter.ai/api/alpha/decisions<br/>typesafe/jev-1.13]
     E --> F{Probabilidad}
